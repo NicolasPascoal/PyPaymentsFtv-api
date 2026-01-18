@@ -46,10 +46,14 @@ def get_praticante(praticante_id):
         "ativo": praticante.ativo
     }), 200
 
-@praticante_bp.route("/delete/participante/<int:praticante_id>", methods=["DELETE"])
+from app.controllers.praticantes import deletar_praticante
+
+@praticante_bp.route("/praticantes/<int:praticante_id>", methods=["DELETE"])
 def delete_praticante(praticante_id):
-    praticante = buscar_praticante(praticante_id)
-    if not praticante:
+    sucesso = deletar_praticante(praticante_id)
+
+    if not sucesso:
         return jsonify({"erro": "Praticante não encontrado"}), 404
+
     return jsonify({"msg": "Praticante deletado com sucesso"}), 200
 
